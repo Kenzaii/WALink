@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SG WhatsApp Link Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>WhatsApp Link Generator</h1>
+        <div class="mode-switch">
+            <button id="singleMode" class="mode-btn active" onclick="switchMode('single')">Single Number</button>
+            <button id="multiMode" class="mode-btn" onclick="switchMode('multi')">Multiple Numbers</button>
+        </div>
+        <div id="singleInput" class="input-container">
+            <input type="text" id="phoneNumber" placeholder="Enter phone number (e.g., 8123 4567)" />
+            <button onclick="generateLink()">Generate Link</button>
+        </div>
+        <div id="multiInput" class="input-container" style="display: none;">
+            <textarea id="multiPhoneNumbers" placeholder="Enter phone numbers (one per line)&#10;Example:&#10;8123 4567&#10;+65 8123 4567&#10;65 8123 4567"></textarea>
+            <button onclick="generateMultipleLinks()">Generate Links</button>
+        </div>
+        <div class="result-container">
+            <p id="error" class="error"></p>
+            <div id="linkContainer" class="link-container">
+                <div id="linksList"></div>
+                <a id="whatsappLink" target="_blank"></a>
+                <button id="copyButton" onclick="copyLink()" style="display: none;">Copy Link</button>
+            </div>
+        </div>
+        <div class="format-info">
+            <h3>Accepted formats:</h3>
+            <ul>
+                <li>+65 XXXXXXXX</li>
+                <li>+65 XXXX XXXX</li>
+                <li>65 XXXXXXXX</li>
+                <li>65 XXXX XXXX</li>
+                <li>XXXXXXXX</li>
+                <li>XXXX XXXX</li>
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
