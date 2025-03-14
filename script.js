@@ -101,26 +101,37 @@ function generateMultipleLinks() {
     let validLinks = [];
 
     lines.forEach((line, index) => {
-        // Split by colon for label, but only split on the first colon
-        const parts = line.split(/:(.*)/s).map(part => part ? part.trim() : '');
-        const label = parts.length > 1 ? parts[0] : '';
-        const number = parts.length > 1 ? parts[1] : parts[0];
-
-        const cleanNumber = validateAndCleanNumber(number);
+        const trimmedLine = line.trim();
+        // Try to find a phone number pattern in the line
+        const phoneMatch = trimmedLine.match(/(?:\+65|65)?\s*\d{4}\s*\d{4}|\d{8}/);
         
-        if (!cleanNumber) {
+        if (phoneMatch) {
+            const number = phoneMatch[0];
+            // The label is everything before the phone number, trimmed
+            const label = trimmedLine.substring(0, trimmedLine.indexOf(number)).trim();
+            
+            const cleanNumber = validateAndCleanNumber(number);
+            
+            if (!cleanNumber) {
+                hasErrors = true;
+                const errorItem = document.createElement('div');
+                errorItem.className = 'error';
+                errorItem.textContent = `Line ${index + 1}: Invalid number format - "${number}"`;
+                errorElement.appendChild(errorItem);
+            } else {
+                const waLink = `https://wa.me/${cleanNumber.substring(1)}`;
+                validLinks.push({ 
+                    label: label,
+                    original: number,
+                    link: waLink 
+                });
+            }
+        } else {
             hasErrors = true;
             const errorItem = document.createElement('div');
             errorItem.className = 'error';
-            errorItem.textContent = `Line ${index + 1}: Invalid number format - "${number}"`;
+            errorItem.textContent = `Line ${index + 1}: No valid phone number found - "${trimmedLine}"`;
             errorElement.appendChild(errorItem);
-        } else {
-            const waLink = `https://wa.me/${cleanNumber.substring(1)}`;
-            validLinks.push({ 
-                label: label,
-                original: number,
-                link: waLink 
-            });
         }
     });
 

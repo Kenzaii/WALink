@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Link Generator</title>
+    <title>SG WhatsApp Link Generator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,11 +14,14 @@
             <button id="multiMode" class="mode-btn" onclick="switchMode('multi')">Multiple Numbers</button>
         </div>
         <div id="singleInput" class="input-container">
-            <input type="text" id="phoneNumber" placeholder="Enter phone number (e.g., 8123 4567)" />
+            <div class="input-group">
+                <input type="text" id="singleLabel" placeholder="Label (optional)" />
+                <input type="text" id="phoneNumber" placeholder="Enter phone number (e.g., 8123 4567)" />
+            </div>
             <button onclick="generateLink()">Generate Link</button>
         </div>
         <div id="multiInput" class="input-container" style="display: none;">
-            <textarea id="multiPhoneNumbers" placeholder="Enter phone numbers (one per line)&#10;Example:&#10;8123 4567&#10;+65 8123 4567&#10;65 8123 4567"></textarea>
+            <textarea id="multiPhoneNumbers" placeholder="Enter labels and numbers (one per line)&#10;Example:&#10;John 8123 4567&#10;Sales Team +65 8123 4567&#10;Support 65 8123 4567&#10;8123 4567"></textarea>
             <button onclick="generateMultipleLinks()">Generate Links</button>
         </div>
         <div class="result-container">
