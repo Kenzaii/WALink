@@ -58,12 +58,10 @@ function generateLink() {
     const labelInput = document.getElementById('singleLabel').value.trim();
     const errorElement = document.getElementById('error');
     const linksList = document.getElementById('linksList');
-    const copyButton = document.getElementById('copyButton');
 
     // Reset previous state
     errorElement.textContent = '';
     linksList.innerHTML = '';
-    copyButton.style.display = 'none';
 
     const cleanNumber = validateAndCleanNumber(phoneInput);
 
@@ -72,14 +70,15 @@ function generateLink() {
         return;
     }
 
-    // Generate the WhatsApp link
-    const waLink = `https://wa.me/${cleanNumber.substring(1)}`; // Remove the + before adding to URL
+    // Generate the WhatsApp link with + symbol
+    const waLink = `https://wa.me/+${cleanNumber.substring(1)}`; // Keep the + for the URL
     
     const linkItem = document.createElement('div');
     linkItem.className = 'link-item';
     linkItem.innerHTML = `
         <div class="link-content">
             ${labelInput ? `<div class="label">${labelInput}</div>` : ''}
+            <div style="font-size: 0.8em; color: #666;">${phoneInput}</div>
             <a href="${waLink}" target="_blank">${waLink}</a>
         </div>
         <button onclick="copyToClipboard('${waLink}', this)">Copy</button>
@@ -119,7 +118,8 @@ function generateMultipleLinks() {
                 errorItem.textContent = `Line ${index + 1}: Invalid number format - "${number}"`;
                 errorElement.appendChild(errorItem);
             } else {
-                const waLink = `https://wa.me/${cleanNumber.substring(1)}`;
+                // Generate the WhatsApp link with + symbol
+                const waLink = `https://wa.me/+${cleanNumber.substring(1)}`;
                 validLinks.push({ 
                     label: label,
                     original: number,
